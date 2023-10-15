@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+		
+		<link rel="stylesheet" type="text/css" href="speech.css">
+		
+		<title>Pure JavaScript Voice System</title>
+		
+	</head>
+	<body>
+		<div class="container">
+			
+			<!-- For the text-to-speech conversion -->
+	    <h2>JavaScript Text to Speech</h2>
+		<div>
+			<input type="text" id="text-to-speech" placeholder="Enter text to speak..."/>
+			</div>
+			
+        <div>
+        	<button type="button" onclick="textToAudio()">Speak</button>
+        	</div>
+        
+        <div>
+        	<small><b>NOTE:</b> Enter text and click on speak button.</small>
+        	</div>
+        	<br><br><br>
+        	
+        	<h2>JavaScript Speech to Text</h2>
+        	
+        <p>Click on the below button and speak something...</p>
+        
+        <p><button type="button" onclick="runSpeechRecognition()">Speech to Text</button> &nbsp; <span id="action"></span></p>
+        
+        <!-- output text result -->
+        <div id="output" class="hide"></div>
+        
+     </div>
+        
+        <!-- javascript goes here -->
+		<script type="text/javascript" src="speech.js"></script>
+		
+	</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JavaScript StopWatch</title>
+    <link rel="stylesheet" href="stop.css">
+  </head>
+  <body>
+  	<div class="container">
+    <div id="stopwatch-container">
+    	<!-- creating an id for the clock reading for easy target in javascript -->
+      <p id="stopwatch">00:00:00:00</p>
+    </div>
+    <div id="buttons-container">
+    	<!-- creating a function events called main for when the start button is clicked (events are defined in javascript) -->
+        <button onclick="main()" class="buttonstart" id="main-btn" class="btn">Start</button>
+        <!-- creating even function reset for when the reset button is clicked -->
+        <button onclick="reset()" class="buttonstop" id="reset-btn" class="btn">Reset</button>
+      </div>
+      <footer>
+      	<p><b>Developed By:</b> WhizzyDoc ©<b>2022</b></p>
+      </footer>
+    </div>
+    
+    <script src="stop.js"></script>
+    </body>
+    </html>
