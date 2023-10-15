@@ -84,18 +84,18 @@ $(document).ready(function() {
             var url = ''
             if(type_val == 'all') {
                 if(cat_val == 'all') {
-                    url = 'http://127.0.0.1:8000/api/apps/get_all_apps/';
+                    url = 'https://riganapi.pythonanywhere.com/api/apps/get_all_apps/';
                 }
                 else {
-                    url = `http://127.0.0.1:8000/api/categories/${cat_val}/get_apps/`;
+                    url = `https://riganapi.pythonanywhere.com/api/categories/${cat_val}/get_apps/`;
                 }
             }
             else {
                 if(cat_val == 'all') {
-                    url = `http://127.0.0.1:8000/api/types/${type_val}/get_apps/`;
+                    url = `https://riganapi.pythonanywhere.com/api/types/${type_val}/get_apps/`;
                 }
                 else {
-                    url = `http://127.0.0.1:8000/api/apps/filter_category_type/?category_id=${cat_val}&type_id=${type_val}`
+                    url = `https://riganapi.pythonanywhere.com/api/apps/filter_category_type/?category_id=${cat_val}&type_id=${type_val}`
                 }
             }
             getMoreApps(url);
@@ -108,18 +108,18 @@ $(document).ready(function() {
             var url = ''
             if(cat_val == 'all') {
                 if(type_val == 'all') {
-                    url = 'http://127.0.0.1:8000/api/apps/get_all_apps/';
+                    url = 'https://riganapi.pythonanywhere.com/api/apps/get_all_apps/';
                 }
                 else {
-                    url = `http://127.0.0.1:8000/api/types/${type_val}/get_apps/`;
+                    url = `https://riganapi.pythonanywhere.com/api/types/${type_val}/get_apps/`;
                 }
             }
             else {
                 if(type_val == 'all') {
-                    url = `http://127.0.0.1:8000/api/categories/${cat_val}/get_apps/`;
+                    url = `https://riganapi.pythonanywhere.com/api/categories/${cat_val}/get_apps/`;
                 }
                 else {
-                    url = `http://127.0.0.1:8000/api/apps/filter_category_type/?category_id=${cat_val}&type_id=${type_val}`
+                    url = `https://riganapi.pythonanywhere.com/api/apps/filter_category_type/?category_id=${cat_val}&type_id=${type_val}`
                 }
             }
             getMoreApps(url);
@@ -133,7 +133,7 @@ $(document).ready(function() {
                 return;
             }
             $('.more-app').empty().html(`<div class="loader"></div>`);
-            var url = `http://127.0.0.1:8000/api/apps/search/?query=${val}`;
+            var url = `https://riganapi.pythonanywhere.com/api/apps/search/?query=${val}`;
             getMoreApps(url);
         })
         $('.close-menu').click(function() {
@@ -190,7 +190,7 @@ $(document).ready(function() {
   // posting comment
   $('#post-rate').click(function(e) {
     e.preventDefault();
-    var comment_url = "http://127.0.0.1:8000/api/apps/post_comment/";
+    var comment_url = "https://riganapi.pythonanywhere.com/api/apps/post_comment/";
     var name = $('#user-name').val();
     var comment = $('#user-comment').val();
     var rating = $("input[name=rate]:checked").val();
@@ -299,7 +299,7 @@ $(document).ready(function() {
             location.href = 'login.html';
             return;
         }
-        var url = 'http://127.0.0.1:8000/api/users/update_profile/';
+        var url = 'https://riganapi.pythonanywhere.com/api/users/update_profile/';
         const formData = JSON.stringify({
             username: localStorage.username,
             firstName: $('#fname').val(),

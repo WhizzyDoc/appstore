@@ -1,7 +1,7 @@
 /************* function to load profile ***************/
 function loadProfile() {
     $('#profile-content').empty().html(`<div class="loader"></div>`);
-    var url = `http://127.0.0.1:8000/api/users/get_profile/`;
+    var url = `https://riganapi.pythonanywhere.com/api/users/get_profile/`;
     const formData = JSON.stringify({
         username: localStorage.username,
         password: localStorage.password
@@ -26,7 +26,7 @@ function loadProfile() {
         if(data['status'] == "success") {
             var dp_link = '';
             if(data['data']['image'] != null) {
-                dp_link = `http://127.0.0.1:8000${data['data']['image']}`;
+                dp_link = `https://riganapi.pythonanywhere.com${data['data']['image']}`;
             }
             else {
                 dp_link = 'static/image/avatar.png';
@@ -91,7 +91,7 @@ function loadProfile() {
                 swal("error", "Sorry, you are logged out at this moment, kindly log back in to continue", "error");
                 return;
             }
-            var url = 'http://127.0.0.1:8000/api/users/update_profile_image/';
+            var url = 'https://riganapi.pythonanywhere.com/api/users/update_profile_image/';
             var image = $('#dp')[0].files[0];
             //console.log(image);
             const formData = new FormData();
@@ -160,7 +160,7 @@ function getMoreApps(url) {
                 paid = "N" + (app[a].price).toLocaleString();
             }
             var temp = `<tr class="get-detail" data-id="${app[a].id}" data-name="${app[a].name}">
-            <td><img class="app-img" src="http://127.0.0.1:8000${app[a].icon}" /></td>
+            <td><img class="app-img" src="https://riganapi.pythonanywhere.com${app[a].icon}" /></td>
             <td>
                 <h6>${app[a].name}</h6>
                 <p>V ${app[a].version} | ${app[a].category.title}</p>
@@ -191,7 +191,7 @@ function loadMenu() {
     // add a loader to container
     $('.more-app').html(`<div class="loader"></div>`);
     // fetch all categories
-    var cat_url = 'http://127.0.0.1:8000/api/categories/';
+    var cat_url = 'https://riganapi.pythonanywhere.com/api/categories/';
     fetch(cat_url, {
         headers: {
             'Accept': 'application/json',
@@ -210,7 +210,7 @@ function loadMenu() {
         swal("Oops!", "Error Occured, failed to get data", "error");
     });
     // fetch all types
-    var type_url = 'http://127.0.0.1:8000/api/types/';
+    var type_url = 'https://riganapi.pythonanywhere.com/api/types/';
     fetch(type_url, {
         headers: {
             'Accept': 'application/json',
@@ -229,7 +229,7 @@ function loadMenu() {
         swal("Oops!", "Error Occured, failed to get data", "error");
     })
     // function to fetch all apps
-    var url = 'http://127.0.0.1:8000/api/apps/get_all_apps/'
+    var url = 'https://riganapi.pythonanywhere.com/api/apps/get_all_apps/'
     getMoreApps(url);
 }
 
@@ -245,7 +245,7 @@ function getAppDetail(elem) {
     $('.app-det-title').html(title);
     //$('.myApp').html(`<div class="loader"></div>`);
     // fetch app details
-    var det_url = `http://127.0.0.1:8000/api/apps/${id}/`;
+    var det_url = `https://riganapi.pythonanywhere.com/api/apps/${id}/`;
     fetch(det_url, {
         headers: {
             'Accept': 'application/json',
@@ -317,7 +317,7 @@ function getAppDetail(elem) {
         swal("Oops!", "Error Occured, Please check your internet connection", "error");
     });
     // fetch related apps
-    var rel_url = `http://127.0.0.1:8000/api/apps/${id}/get_related_apps/`;
+    var rel_url = `https://riganapi.pythonanywhere.com/api/apps/${id}/get_related_apps/`;
     fetch(rel_url, {
         headers: {
             'Accept': 'application/json',
@@ -330,7 +330,7 @@ function getAppDetail(elem) {
         for(key in data.data) {
             app = data.data;
             var temp = `<div class="rel-app-con" data-id="${app[key].id}" data-name="${app[key].name}">
-            <img src="http://127.0.0.1:8000${app[key].icon}" class="rel-app-icon" alt="" />
+            <img src="https://riganapi.pythonanywhere.com${app[key].icon}" class="rel-app-icon" alt="" />
             <h5>${app[key].name}</h5>
             </div>`;
             $('.rel-apps').append(temp);
@@ -344,7 +344,7 @@ function getAppDetail(elem) {
     });
 
     // fetch comments
-    var com_url = `http://127.0.0.1:8000/api/apps/${id}/get_comments/`;
+    var com_url = `https://riganapi.pythonanywhere.com/api/apps/${id}/get_comments/`;
     fetch(com_url, {
         headers: {
             'Accept': 'application/json',
