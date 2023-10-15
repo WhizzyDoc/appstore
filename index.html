@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Rigan App Store</title>
+    <link rel="stylesheet" href="static/css/rigan.css" />
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/css/fontawesome.css" />
+    <link rel="stylesheet" href="static/css/sweetalert.min.css" />
+    <link rel="stylesheet" href="static/css/style.css" />
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/sweetalert.min.js"></script>
+</head>
+<body>
+    <!-- The Modal -->
+    <!-- The Modal -->
+<div class="modal fade" id="profileModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <form class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Edit Profile</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" class="form-control" id="fname">
+                </div>
+                <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" class="form-control" id="lname">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone">
+                </div>
+                <h6>
+                    Kindly set up your recovery PIN (default PIN is 1234). This PIN will be used to recover your account 
+                    in case of forgotten password. Do not share your pin with anyone.
+                </h6>
+                <div class="form-group">
+                    <label for="pin">Recovery PIN (4 digits)</label>
+                    <input type="text" class="form-control" id="pin">
+                </div>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="submit" id="submit-profile" class="btn btn-success">Save Profile</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+    
+        </form>
+    </div>
+  </div>
+
+
+    <!-- Profile Page -->
+    <div class="profile-container">
+        <header>
+            <div class="fa fa-angle-left close-profile"></div>
+            <h6 class="">My Profile</h6>
+            <div class="dropdown">
+                <div class="fa fa-ellipsis-v" onclick="dropDown($(this));"></div>
+                <div class="dropdown-content">
+                  <a class="" href="#"><i class="fa fa-trash"></i> Delete Account</a>
+                  <a class="" href="#"><i class="fa fa-warning"></i> Deactivate Account</a>
+                  <a class="" href="#" id="profile-refresh"><i class="fa fa-refresh"></i> Refresh</a>
+                </div>
+            </div>
+        </header>
+        <div class="app-content" id="profile-content"></div>
+        
+    </div>
+
+    <!-- System App Page -->
+    <div class="app-container">
+        <header>
+            <div class="fa fa-angle-left close-app"></div>
+            <h6 class="app-title">App Title</h6>
+            <div class="dropdown">
+                <div class="fa fa-ellipsis-v" onclick="dropDown($(this));"></div>
+                <div class="dropdown-content">
+                  <a class="" href="#">Link 1</a>
+                  <a class="" href="#">Link 2</a>
+                </div>
+            </div>
+        </header>
+        <iframe class="app-content" id="app-content" src=""></iframe>
+    </div>
+
+    <!-- More Apps section -->
+    <div class="menu-container">
+        <header>
+            <div class="fa fa-angle-left close-menu"></div>
+            <h6 class="menu-title">More Apps</h6>
+            <div class="dropdown">
+                <div class="fa fa-ellipsis-v" onclick="dropDown($(this));"></div>
+                <div class="dropdown-content">
+                  <a id="app-refresh" href="#"><i class="fa fa-refresh"></i> Refresh</a>
+                </div>
+            </div>
+        </header>
+        <div class="app-content" id="menu-content">
+            <div class="filter-con">
+                <h5><i class="fa fa-filter"></i> Filter</h5>
+                <form>
+                    <select name="by-category" id="by-category" class="custom-select">
+                      
+                    </select>
+                </form>
+                <form>
+                    <select name="by-type" id="by-type" class="custom-select">
+                      <option value="" selected>by type</option>
+                    </select>
+                </form>
+            </div>
+            <form class="search">
+                <div class="w-flex w-flex-between w-align-center">
+                    <input autofocus type="text" class="form-control" id="app-search" placeholder="Search App by Name or Description" />
+                    <button type="submit" class="btn btn-secondary" id="search-btn"><i class="fa fa-search"></i></button>
+                </div>
+                <div class="search-content"></div>
+            </form>
+            <table class="table table-hover app-table">
+                <tbody class="more-app">
+                    
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+    <!-- App Details Page -->
+    <div class="app-det-con">
+        <header>
+            <div class="fa fa-angle-left close-app-det"></div>
+            <h6 class="app-det-title"></h6>
+            <div class="dropdown">
+                <div class="fa fa-ellipsis-v" onclick="dropDown($(this));"></div>
+                <div class="dropdown-content">
+                  <a class="app-det-refresh" data-id="" data-name="" href="#"><i class="fa fa-refresh"></i> Refresh</a>
+                </div>
+            </div>
+        </header>
+        <div class="app-content" id="app-det-content">
+            <div class="myApp">
+                <div><img id="app-icon" src="" /></div>
+                <div>
+                    <h2 style="font-weight:800;" id="app-name"></h2>
+                    <h5 style="font-weight:600;" id="developer"></h5>
+                    <p id="app-category"></p>
+                </div>
+            </div>
+            <div class="w-flex w-flex-between w-align-center app-spec">
+                <div class="w-padding w-center w-border-right">
+                    <h5 class="fa fa-bar-chart"></h5>
+                    <p>Version <span id="version"></span></p>
+                </div>
+                <div class="w-padding w-center w-border-right">
+                    <h5 class="fa fa-download"></h5>
+                    <p><span id="app-download">512</span> Downloads</p>
+                </div>
+                <div class="w-padding w-center w-border-right">
+                    <h5 class="fa fa-dollar"></h5>
+                    <p><span id="app-price"></span></p>
+                </div>
+            </div>
+            <!-- download section -->
+            <div class="w-flex w-flex-between w-align-center app-spec">
+                <select name="os" id="os" class="custom-select">
+                    <option selected>Select Device</option>
+                </select>
+                <a href="#" id="app-file"><button class="btn btn-primary">Download</button></a>
+            </div>
+            
+            <!-- App Images -->
+            <div class="w-flex w-flex-start w-align-center app-images"></div>
+            <!-- App Description -->
+            <h3 class="rel-app-title">About this app</h3>
+            <div class="app-description"></div>
+            <!-- Similar Apps -->
+            <h3 class="rel-app-title">Related Apps</h3>
+            <div class="rel-apps"></div>
+            <!-- Ratings -->
+            <h3 class="rel-app-title">Ratings and reviews</h3>
+            <div class="rating-con">
+
+                <div class="rate-sum">
+                    <h1 id="av-star"></h1>
+                    <span id="star-me">
+                    </span>
+                    <p id="tot-review"></p>
+                </div>
+
+                <div class="rev-container">
+                    <div class="side">
+                        <div class="rev-num">5</div>
+                        <div class="bar-container">
+                            <div class="bar-5"></div>
+                        </div>
+                    </div>
+                    <div class="side">
+                        <div class="rev-num">4</div>
+                        <div class="bar-container">
+                            <div class="bar-4"></div>
+                        </div>
+                    </div>
+                    <div class="side">
+                        <div class="rev-num">3</div>
+                        <div class="bar-container">
+                            <div class="bar-3"></div>
+                        </div>
+                    </div>
+                    <div class="side">
+                        <div class="rev-num">2</div>
+                        <div class="bar-container">
+                            <div class="bar-2"></div>
+                        </div>
+                    </div>
+                    <div class="side">
+                        <div class="rev-num">1</div>
+                        <div class="bar-container">
+                            <div class="bar-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- comment section -->
+            <div class="comment-con"></div>
+
+            <!-- drop review -->
+            <button class="btn review-btn">Write A Review</button>
+
+            <div class="rate-container">
+                <div class="edit">CLOSE</div>
+                <h3>Kindly rate Us!</h3>
+
+                <div class="post">
+                  <div class="text">Thanks for rating us!</div>
+                </div>
+
+                <div class="star-widget">
+                  <input type="radio" name="rate" id="rate-5" value="5">
+                  <label for="rate-5" class="fa fa-star"></label>
+                  <input type="radio" name="rate" id="rate-4" value="4">
+                  <label for="rate-4" class="fa fa-star"></label>
+                  <input type="radio" name="rate" id="rate-3"  value="3">
+                  <label for="rate-3" class="fa fa-star"></label>
+                  <input type="radio" name="rate" id="rate-2" value="2">
+                  <label for="rate-2" class="fa fa-star"></label>
+                  <input type="radio" name="rate" id="rate-1" value="1">
+                  <label for="rate-1" class="fa fa-star"></label>
+
+                  <form action="#" id="rating">
+                    <div class="ucommentor">
+                        <textarea rows="1" cols="30" placeholder="Your Name" id="user-name" required></textarea>
+                      </div>
+                    <div class="textarea">
+                      <textarea cols="30" placeholder="Describe your experience.." id="user-comment" required></textarea>
+                    </div>
+                    <input type="hidden" value="" id="user-rating" />
+                    <div class="btn-post">
+                      <button type="submit" id="post-rate">Post</button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    
+    <!-- Home Page -->
+    <header class="">
+        <h6>Rigan App Store</h6>
+        <form>
+            <input type="checkbox" onclick="toggle(this.form)" id="checkbox" name="checkbox" />
+            <label for="checkbox">Toggle</label>
+        </form>
+        <div class="dropdown">
+            <div class="fa fa-ellipsis-v" onclick="dropDown($(this));"></div>
+            <div class="dropdown-content">
+              <a class="" href="#" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</a>
+            </div>
+        </div>
+        
+    </header>
+    
+    <div class="wrapper">
+        
+    <input type="radio" name="slider" checked id="home">
+    <input type="radio" name="slider" id="blog">
+    <input type="radio" name="slider" id="code">
+    
+    <section>
+      <div class="content content-1">
+          <form class="search">
+            <input autofocus type="text" class="form-control" id="search" placeholder="Search App by Name" />
+            <div class="search-content" id="search-content"></div>
+          </form>
+        <section class="head">Media Tools</section>
+        <section class="app-slider">
+            <div>
+            <a href="#" data-id="image-resizer" data-name="Image Resizer" class="app-link">
+                <img src="static/image/photo-resize.png" alt="" />
+            </a>
+            <h6>Image resizer</h6>   
+         </div> 
+         <div>
+            <a href="#" data-id="image-editor" data-name="Image Editor" class="app-link">
+                <img src="static/image/photo-edit.png" alt="" />
+            </a>
+            <h6>Image Editor</h6>   
+         </div>
+         <div>
+            <a href="#" data-id="audio-recorder" data-name="Audio Recorder" class="app-link">
+                <img src="static/image/audio-recorder.png" alt="" />
+            </a>
+            <h6>Audio Recorder</h6>   
+         </div>
+        </section>
+        
+        <section class="head">Word Tools</section>
+        <section class="app-slider">
+         <div>
+            <a href="#" data-id="dictionary" data-name="Dictionary" class="app-link">
+                <img src="static/image/dictionary.png" alt="" />
+            </a>
+            <h6>Dictionary</h6>   
+         </div> 
+         <div>
+            <a href="#" data-id="todo-list" data-name="To-Do List" class="app-link">
+                <img src="static/image/todo.png" alt="" />
+            </a>
+            <h6>To-Do List</h6>   
+         </div>
+         <div>
+            <a href="#" data-id="note-app" data-name="Note App" class="app-link">
+                <img src="static/image/note.png" alt="" />
+            </a>
+            <h6>Note App</h6>   
+         </div>
+       </section>
+            
+       <section class="head">Calculator Tools</section>
+       <section class="app-slider">
+         <div>
+            <a href="#" data-id="basic-calculator" data-name="Simple Calculator" class="app-link">
+                <img src="static/image/calculator.png" alt="" />
+            </a>
+            <h6>Simple Calculator</h6>   
+         </div>    
+         <div>
+            <a href="#" data-id="scientific-calculator" data-name="Scientific Calculator" class="app-link">
+                <img src="static/image/science-calculator.png" alt="" />
+            </a>
+            <h6>Scientific Calculator</h6>   
+         </div> 
+         <div>
+            <a href="#" data-id="age-calculator" data-name="Age Calculator" class="app-link">
+                <img src="static/image/age-calculator.png" alt="" />
+            </a>
+            <h6>Age Calculator</h6>   
+         </div> 
+         <div>
+            <a href="#" data-id="interest-calculator" data-name="Interest Calculator" class="app-link">
+                <img src="static/image/interest-calculator.png" alt="" />
+            </a>
+            <h6>Interest Calculator</h6>   
+         </div>
+         <div>
+            <a href="#" data-id="bmi-calculator" data-name="BMI Calculator" class="app-link">
+                <img src="static/image/bmi-calculator.png" alt="" />
+            </a>
+            <h6>BMI Calculator</h6>   
+         </div>
+       </section>
+       
+       <section class="head">Converter Tools</section>
+       <section class="app-slider">
+           <div>
+            <a href="#" data-id="language-translator" data-name="Language Translator" class="app-link">
+                <img src="static/image/language.png" alt="" />
+            </a>
+            <h6>Language Translator</h6>   
+         </div>
+         <div>
+            <a href="#" data-id="currency-converter" data-name="Currency Converter" class="app-link">
+                <img src="static/image/currency.png" alt="" />
+            </a>
+            <h6>Currency Converter</h6>   
+         </div>
+       </section>
+       
+       <section class="head">A.I Tools</section>
+       <section class="app-slider">
+        <div>
+            <a href="#" data-id="Mini-Wolfram" data-name="Mathematics Bot" class="app-link">
+                <img src="static/image/math-ai.png" alt="" />
+            </a>
+            <h6>Maths A.I</h6>   
+         </div>
+         <div>
+            <a href="#" data-id="Chatbot" data-name="Chat GPT" class="app-link">
+                <img src="static/image/chatbot.png" alt="" />
+            </a>
+            <h6>Chat GPT</h6>   
+         </div>
+         <div>
+            <a href="#" data-id="voice-translator" data-name="Voice Translator A.I" class="app-link">
+                <img src="" alt="" />
+            </a>
+            <h6>Voice Translator A.I</h6>   
+         </div>
+       </section>
+
+       <section class="head">Games</section>
+       <section class="app-slider">
+        <div>
+                <a href="#" data-id="checkers" data-name="Checkers" class="app-link">
+                    <img src="static/image/checkers.png" alt="" />
+                </a>
+                <h6>Checkers</h6>   
+            </div>
+            <div>
+                <a href="#" data-id="tic-tac-toe" data-name="Tic Tac Toe" class="app-link">
+                    <img src="static/image/tic.png" alt="" />
+                </a>
+                <h6>Tic Tac Toe</h6>   
+            </div>
+            <div>
+                <a href="#" data-id="chess" data-name="Chess Game" class="app-link">
+                    <img src="static/image/chess.png" alt="" />
+                </a>
+                <h6>Chess Game</h6>   
+            </div>
+            <div>
+                <a href="#" data-id="ludo-game" data-name="Ludo Game" class="app-link">
+                    <img src="static/image/ludo.png" alt="" />
+                </a>
+                <h6>Ludo Game</h6>   
+            </div>
+            <div>
+                <a href="#" data-id="word-guessing-game" data-name="Word Guessing Game" class="app-link">
+                    <img src="static/image/language.png" alt="" />
+                </a>
+                <h6>Word Guess</h6>   
+            </div>
+            <div>
+                <a href="#" data-id="word-scrambling-game" data-name="Word Scrambling Game" class="app-link">
+                    <img src="static/image/language.png" alt="" />
+                </a>
+                <h6>Word Scramble</h6>   
+            </div>
+            <div>
+                <a href="#" data-id="horse-racing" data-name="Horse Racing" class="app-link">
+                    <img src="static/image/horse.png" alt="" />
+                </a>
+                <h6>Horse Racing</h6>   
+            </div>
+            <div>
+                <a href="#" data-id="flappy-bird" data-name="Flappy Bird" class="app-link">
+                    <img src="static/image/flappy.png" alt="" />
+                </a>
+                <h6>Flappy Bird</h6>   
+            </div>
+        </section>
+       
+       <section class="head">Utilities</section>
+       <section class="app-slider">
+        <div>
+            <a href="#" data-id="weather" data-name="Weather Forecast" class="app-link">
+                <img src="static/image/weather.png" alt="" />
+            </a>
+            <h6>Weather Forecast</h6>   
+        </div>
+        <div>
+            <a href="#" data-id="qr-reader" data-name="QR Code Reader" class="app-link">
+                <img src="static/image/qr-reader.png" alt="" />
+            </a>
+            <h6>QR Code Reader</h6>   
+        </div>
+        <div>
+            <a href="#" data-id="qr-generator" data-name="QR Code Creator" class="app-link">
+                <img src="static/image/qr-gen.png" alt="" />
+            </a>
+            <h6>QR Code Creator</h6>   
+        </div>
+       </section>
+        
+      </div>
+      
+      <!-- Account Page -->
+      <div class="content content-2">
+          <table class="table table-hover">
+              <tbody>
+                  <tr class="user-profile" data-id="" data-name="My Profile">
+                      <td><i class="fa fa-user"></i></td>
+                      <td>My Profile</td>
+                      <td><i class="fa fa-angle-right"></i></td>
+                  </tr>
+                  <tr class="openmenu">
+                    <td><i class="fa fa-mobile"></i></td>
+                    <td>Explore More Apps</td>
+                    <td><i class="fa fa-angle-right"></i></td>
+                </tr>
+                <!--
+                  <tr class="" data-id="" data-name="Manage APIs">
+                      <td><i class="fa fa-code"></i></td>
+                      <td>Manage APIs</td>
+                      <td><i class="fa fa-angle-right"></i></td>
+                  </tr>
+                  <tr class="" data-id="" data-name="Developer">
+                      <td><i class="fa fa-user-secret"></i></td>
+                      <td>Developer's Profile</td>
+                      <td><i class="fa fa-angle-right"></i></td>
+                  </tr>
+                -->
+                  <tr class="switch-login">
+                    <td><i class="fa fa-power-off"></i></td>
+                    <td id="user-state" data-id=""></td>
+                    <td><i class="fa fa-angle-right"></i></td>
+                </tr>
+                  <tr>
+                    <td><i class="fa fa-globe"></i></td>
+                    <td>Visit our site</td>
+                    <td><i class="fa fa-angle-right"></i></td>
+                </tr>
+              </tbody>
+          </table>
+ 
+      </div>
+      
+      <!-- Info Page -->
+      <div class="content content-3">
+        <button class="btn btn-primary">
+            <span class="spinner-grow"></span> Loading...
+        </button>
+      </div>
+    </section>
+    
+    <div class="tabs">
+      <label for="home" class="home"><i class="fa fa-home"></i></label>
+      <label for="blog" class="blog"><i class="fa fa-gears"></i></label>
+      <label for="code" class="code"><i class="fa fa-info-circle"></i></label>
+      <div class="slider"></div>
+    </div>
+    
+  </div>
+    
+    <script src="static/js/function.js"></script>
+    <script src="static/js/script.js"></script>
+</body>
+</html>

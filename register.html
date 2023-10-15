@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!-- Created By Rigan Tech -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+      <title>Register</title>
+      <link rel="stylesheet" href="static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/css/fontawesome.css" />
+    <link rel="stylesheet" href="static/css/sweetalert.min.css" />
+    <link rel="stylesheet" href="static/css/login.css" />
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/sweetalert.min.js"></script>
+   </head>
+   <body>
+      <div class="content">
+         
+         <header>Sign Up</header>
+         <form action="#" method="POST" id="signup-form">
+            <div class="field">
+               <input id="first-name" name="first-name" type="text" autocomplete="off" placeholder="Enter First Name" required>
+               <div class="icons">
+                  <span class="icon2 fa fa-user"></span>
+               </div>
+            </div>
+            <div class="field">
+               <input id="last-name" name="last-name" type="text" autocomplete="off" placeholder="Enter Last Name" required>
+               <div class="icons">
+                  <span class="icon2 fa fa-user"></span>
+               </div>
+            </div>
+            <div class="field">
+               <input id="username" name="username" type="text" autocomplete="off" placeholder="Enter Username" required>
+               <div class="icons">
+                  <span class="icon2 fa fa-user"></span>
+               </div>
+            </div>
+            <div class="field">
+               <input id="email" name="email" type="email" autocomplete="off" placeholder="Enter Email" required>
+               <div class="icons">
+                  <span class="icon2 fa fa-envelope"></span>
+               </div>
+            </div>
+            <div class="field">
+               <input id="phone-number" name="tel" type="tel" autocomplete="off" placeholder="Enter Phone Number" required>
+               <div class="icons">
+                  <span class="icon2 fa fa-phone"></span>
+               </div>
+            </div>
+            <div class="field">
+               <input id="password" name="password" type="password" autocomplete="off" placeholder="Enter Password" required>
+               <div class="icons">
+                  <span class="icon2 fa fa-eye" id="pass"></span>
+               </div> 
+            </div>
+            <div class="field">
+               <input id="cpassword" name="cpassword" type="password" autocomplete="off" placeholder="Confirm Password" required>
+               <div class="icons">
+                  <span class="icon2 fa fa-eye" id="cpass"></span>
+               </div> 
+            </div>
+            <button type="submit" id="login-btn">Register</button>
+            <h5>Already A User? <a href="login.html">Login</a></h5><br>
+            <h5><a href="index.html"><i class="fa fa-arrow-left"></i> Back to App</a></h5>
+         </form>
+      </div>
+      <script>
+         var password = document.querySelector('#password');
+         var cpassword = document.querySelector('#cpassword');
+         var pass = document.querySelector('#pass');
+         var cpass = document.querySelector('#cpass');
+         pass.onclick = function() {
+            if(password.type == "password") {
+               password.type = "text";
+            }
+            else {
+               password.type = "password";
+            }
+         }
+         cpass.onclick = function() {
+            if(cpassword.type == "password") {
+               cpassword.type = "text";
+            }
+            else {
+               cpassword.type = "password";
+            }
+         }
+         function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if(parts.length === 2) return parts.pop().split(';').shift();
+            }
+            const csrftoken = getCookie('csrftoken');
+            console.log(csrftoken);
+      </script>
+      <script>
+         $('#signup-form').submit(function(e) {
+        e.preventDefault();
+        var login_url = "http://127.0.0.1:8000/api/users/register/";
+        if($('#password').val() != $('#cpassword').val()) {
+         swal("Error", 'Passwords do not match', "error");
+         return;
+        }
+            const formData = JSON.stringify({
+               username: $('#username').val(),
+               email: $('#email').val(),
+               firstName: $('#first-name').val(),
+               lastName: $('#last-name').val(),
+               phoneNumber: $('#phone-number').val(),
+               password: $('#password').val(),
+            });
+            
+            $('#login-btn').html(`<div class="loader"></div>`).attr('disabled', true);
+    
+            fetch(login_url, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                  },
+                body: formData,
+            })
+            .then(response => {
+               if(!response.ok) {
+                  throw new Error('Network response was not ok');
+               }
+                return response.json() // convert response to json
+            })
+            .then(data => {
+                    // perform action with response data
+                    var msg = data['status'];
+                    if(msg == 'success') {
+                     swal("Success", data['message'], "success");
+                      location.href = 'login.html';
+                    }
+                    else if(msg == 'error') {
+                     swal("Error", data['message'], "error");
+                    }
+                    $('#login-btn').empty().text('Register').attr('disabled', false);
+                    
+            })
+            .catch(error => {
+              console.log(error);
+              $('#login-btn').empty().text('Login').attr('disabled', false);
+              })
+      })
+      </script>
+   </body>
+</html>
